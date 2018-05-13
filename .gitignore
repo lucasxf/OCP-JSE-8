@@ -2,4 +2,4 @@
 .vscode
 
 # Java Bytecode
-.class
+*.class
