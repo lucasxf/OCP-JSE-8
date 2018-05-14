@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 class Car {  }
@@ -17,12 +18,36 @@ class Porsche extends Car {
         return "Porsche Cayenne S";
     }
 }
+
+interface Flyable { }
+
+class Plane implements Flyable {
+    @Override
+    public String toString() {
+        return "avião";
+    }
+ }
+
+class Jet extends Plane {
+    @Override
+    public String toString() {
+        return "jatinho";
+    }
+ }
+
+ class Concorde extends Jet {
+    @Override
+    public String toString() {
+        return super.toString() + " supersônico";
+    }
+ }
 public class TestingBounds {
 
     public static void main( String[] args) {
         TestingBounds testingBounds = new TestingBounds();
         testingBounds.testArraysNLists();
         testingBounds.testUpperBounds();
+        testingBounds.testLowerBounds();
     }
 
     void testUpperBounds() {
@@ -70,6 +95,42 @@ public class TestingBounds {
         // compiler error, upper-bounded lists cannot grow.
         // garage.add(new Porsche());
         // garage.add(new Porsche());
+    }
+
+    void testLowerBounds() {
+        List<Plane> avioes = new ArrayList<>();
+
+        avioes.add(new Concorde());
+        avioes.add(new Plane());
+        avioes.add(new Jet());
+        System.out.println(avioes); // [jatinho supersônico, avião, jatinho]
+
+        List<? super Concorde> hangar = new ArrayList<>();
+        List<? super Concorde> hangar2 = new ArrayList<Concorde>();
+        List<? super Concorde> hangar3 = new ArrayList<Plane>();
+        List<? super Concorde> hangar4 = new ArrayList<Flyable>();
+
+        // compiles and runs ok
+        hangar2.add(0, new Concorde());
+        hangar3.add(0, new Concorde());
+        hangar4.add(0, new Concorde());
+
+        // the following 3 statements will cause compiler errors
+        // hangar.add(new Jet()); -> A "Jet" wouldn't "fit" in a "Concorde" List
+        // hangar3.add(0, new Plane());
+        // hangar4.add(0, new Jet());
+
+        // works just fine. Lower bounded lists can grow
+        hangar.add(0, new Concorde());
+        hangar.add(0, new Concorde());
+        System.out.println(hangar); // [jatinho supersônico, jatinho supersônico]
+
+        hangar = new ArrayList(avioes);
+        System.out.println(hangar); // [jatinho supersônico, avião, jatinho]
+        // won't compile. Since Plane doesn't implement Comparable
+        // Collections.sort(hangar);
+
+
     }
 
     void testArraysNLists() {
