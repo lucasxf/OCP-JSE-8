@@ -12,6 +12,7 @@ public class TestCollections {
     public static void main (String[] args) {
         TestCollections test = new TestCollections();
         test.testArrays();
+        test.testLists();
     }
 
     void testArrays() {
@@ -67,9 +68,34 @@ public class TestCollections {
         }
         // prints: [1, 3, 5, 7, 9]
         System.out.println("\n" + numberList);
+        // some binary searching:
+        int firstPosition = Collections.binarySearch(numberList, 1); // 0
+        int middlePosition = Collections.binarySearch(numberList, 5); // 2
+        int lastPosition = Collections.binarySearch(numberList, 9); // 4
+        int noPosition = Collections.binarySearch(numberList, 10); // -6 
+
+        // prints "0, 2, 4, -6"
+        System.out.println(String.format("%s, %s, %s, %s",
+            firstPosition, middlePosition, lastPosition, noPosition));
+
     }
 
     void testLists() {
-        
+        List<Integer> integers = new ArrayList<>();
+        // throws IndexOutOfBoundsException
+        // integers.add(10, 99);
+        integers.add(new Integer(1)); // [1]
+        integers.add(2); // [1, 2]
+        integers.add(new Integer(99)); // [1, 2, 99]
+        integers.add(2, 123); // [1, 2, 123, 99]
+        integers.add(0, 11); // [11, 1, 2, 123, 99]
+        // throws IndexOutOfBoundsException
+        // integers.remove(11);
+        // runs fine thanks to autoboxing
+        boolean hasRemoved = integers.remove(new Integer(11)); // true | [1, 2, 3, 99]
+        System.out.println(hasRemoved);
+        hasRemoved = integers.remove(new Integer(425)); // false | [1, 2, 3, 99] 
+        System.out.println(hasRemoved);
+        System.out.println(integers);
     }
 }
