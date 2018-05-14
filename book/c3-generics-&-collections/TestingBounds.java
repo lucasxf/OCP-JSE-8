@@ -56,6 +56,7 @@ public class TestingBounds {
         testingBounds.evilWorkingMethod(null);
         testingBounds.evilWorkingMethod2(null);
         testingBounds.evilWorkingMethod3(null);
+        testingBounds.evilWorkingMethod4(null);
     }
 
     // compiles and runs fine
@@ -63,7 +64,7 @@ public class TestingBounds {
         System.out.println("tricky 1");
         return null;
     }
-    
+
     // compiles and runs fine
     <X extends A> B evilWorkingMethod2(List<B> list) {
         System.out.println("tricky 2");
@@ -74,6 +75,11 @@ public class TestingBounds {
     <X extends A> B evilWorkingMethod3(List<B> list) {
         System.out.println("tricky 3");
         return new C();
+    }
+
+    <B extends A> B evilWorkingMethod4(List<B> list) {
+        System.out.println("tricky 4");
+        return new A();
     }
 
     // won't compile because B here is the type parameter, not class B
