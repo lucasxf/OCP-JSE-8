@@ -41,6 +41,11 @@ class Jet extends Plane {
         return super.toString() + " supersônico";
     }
  }
+ 
+ class A { }
+ class B extends A { }
+ class C extends B { }
+
 public class TestingBounds {
 
     public static void main( String[] args) {
@@ -48,6 +53,37 @@ public class TestingBounds {
         testingBounds.testArraysNLists();
         testingBounds.testUpperBounds();
         testingBounds.testLowerBounds();
+        testingBounds.evilWorkingMethod(null);
+        testingBounds.evilWorkingMethod2(null);
+        testingBounds.evilWorkingMethod3(null);
+    }
+
+    // compiles and runs fine
+    <B extends A> B evilWorkingMethod(List<B> list) {
+        System.out.println("tricky 1");
+        return null;
+    }
+    
+    // compiles and runs fine
+    <X extends A> B evilWorkingMethod2(List<B> list) {
+        System.out.println("tricky 2");
+        return new B();
+    }
+
+    // compiles and runs fine
+    <X extends A> B evilWorkingMethod3(List<B> list) {
+        System.out.println("tricky 3");
+        return new C();
+    }
+
+    // won't compile because B here is the type parameter, not class B
+    // <B extends A> B reallyTrickyMethod(List<B> list) {
+    //     return new B();
+    // }
+
+    // regular perfect normal generic method
+    <T> T genericMethod (List<? extends T> list) {
+        return list.get(0);
     }
 
     void testUpperBounds() {
@@ -105,6 +141,7 @@ public class TestingBounds {
         avioes.add(new Jet());
         System.out.println(avioes); // [jatinho supersônico, avião, jatinho]
 
+        // compiles and runs without errors
         List<? super Concorde> hangar = new ArrayList<>();
         List<? super Concorde> hangar2 = new ArrayList<Concorde>();
         List<? super Concorde> hangar3 = new ArrayList<Plane>();
