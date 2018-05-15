@@ -29,6 +29,9 @@ public class TestCollections {
         int age = 24;
         long id = 123456;
 
+        List<String> myNames = Arrays.asList("Lucas", "Xavier", "Ferreira", "Lucas");
+        List<String> myLastnames = Arrays.asList("Luke", "Skywalker");
+        List<String> repeatedNames = Arrays.asList("Luke", "Xavier", "Anakin", "Ferreira", "Jedi");
         List<String> names = new ArrayList<>();
         Set<String> uniqueNames = new HashSet<>();
         
@@ -48,6 +51,25 @@ public class TestCollections {
         addToSet = uniqueNames.add(lucas); // false [Lucas]
         System.out.println(addToSet + " " + uniqueNames);
 
+        // I thought it'd print false, it prints true though.
+        // this happens because part of the collection is added
+        // while the duplicate items are ignored.
+        // Since at least one element was added, it works.
+        addToSet = uniqueNames.addAll(myNames); // true [Xavier, Ferreira, Lucas]
+        System.out.println(addToSet + " " + uniqueNames);
+        // for some reason the order goes kind of crazy
+        // [Xavier, Ferreira, Luke, Lucas, Skywalker]
+        addToSet = uniqueNames.addAll(myLastnames); // true [Xavier, Ferreira, Luke, Lucas, Skywalker]
+        System.out.println(addToSet + " " + uniqueNames);
+        boolean removeFromSet = uniqueNames.removeAll(Arrays.asList("Lucas", "Ferreira"));
+        System.out.println(removeFromSet + " " + uniqueNames);
+        addToSet = uniqueNames.addAll(myNames);
+        System.out.println(addToSet + " " + uniqueNames);
+        removeFromSet = uniqueNames.remove("Anakin"); // false, there's no "Anakin" in unique names
+        System.out.println(removeFromSet);
+        System.out.println("Unique names size: " + uniqueNames.size()); // 5
+        addToSet = uniqueNames.addAll(repeatedNames);
+        System.out.println(addToSet + " " + uniqueNames);
     }
 
     void testArrays() {
