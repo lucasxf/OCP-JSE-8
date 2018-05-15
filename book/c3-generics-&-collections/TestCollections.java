@@ -1,9 +1,17 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Collections;
 import java.util.List;
 
 /**
+ * About Collections:
+ * List: an ordered collection of elements that allows duplicate entries.
+ * Set: a collection that does not allow duplicate entries.
+ * Queue: a collection that orders its elements in a specific order for processing. Typically FIFO.
+ * Map: a collection that maps keys to values, with no duplicate keys allowed. The elements in a map are key/value pairs.
+ * 
  * @author Lucas Xavier Ferreira
  * 
  */
@@ -11,8 +19,35 @@ public class TestCollections {
 
     public static void main (String[] args) {
         TestCollections test = new TestCollections();
-        test.testArrays();
-        test.testLists();
+        // test.testArrays();
+        // test.testLists();
+        test.testCollections();
+    }
+
+    void testCollections() {
+        String lucas = "Lucas";
+        int age = 24;
+        long id = 123456;
+
+        List<String> names = new ArrayList<>();
+        Set<String> uniqueNames = new HashSet<>();
+        
+        boolean addToList = names.add(lucas); // true | [Lucas]
+        // prints true
+        System.out.println(addToList + " " + names);
+        addToList = names.add(lucas); // true | [Lucas, Lucas]
+        
+        // still prints true, since lists can have duplicate elements
+        System.out.println(addToList + " " + names);
+        
+        // prints true
+        boolean addToSet = uniqueNames.add(lucas); // true [Lucas]
+        System.out.println(addToSet + " " + uniqueNames); 
+        
+        // will print false because sets do not allow duplicate entries
+        addToSet = uniqueNames.add(lucas); // false [Lucas]
+        System.out.println(addToSet + " " + uniqueNames);
+
     }
 
     void testArrays() {

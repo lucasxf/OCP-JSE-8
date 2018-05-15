@@ -77,11 +77,6 @@ public class TestingBounds {
         return new C();
     }
 
-    <B extends A> B evilWorkingMethod4(List<B> list) {
-        System.out.println("tricky 4");
-        return new A();
-    }
-
     // won't compile because B here is the type parameter, not class B
     // <B extends A> B reallyTrickyMethod(List<B> list) {
     //     return new B();
