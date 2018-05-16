@@ -106,32 +106,49 @@ public class TestCollections {
         // can't find an element, it returns null. 
         // Since primitives cannot be assigned to null, it'll throw an exception:
         // int lower1 = (int) ((TreeSet) treeSet).lower(zero);
+        // lower returns the greatest element that is < e, or null if no such element
         Integer lower2 = (Integer) ((TreeSet) treeSet).lower(minusOne); // null
         Integer lower3 = (Integer) ((TreeSet) treeSet).lower(one); // 0
         Integer lower4 = (Integer) ((TreeSet) treeSet).lower(two); // 1
         Integer lower5 = (Integer) ((TreeSet) treeSet).lower(ninetyNine); // 98
         Integer lower6 = (Integer) ((TreeSet) treeSet).lower(oneHundred); // 99
         Integer lower7 = (Integer) ((TreeSet) treeSet).lower(oneOone); // 99 (not a hundred because '100' isn't an element of treeSet)
-        System.out.println(String.format("%s, %s, %s, %s, %s, %s.", 
+        System.out.println(String.format("lower: %s, %s, %s, %s, %s, %s.", 
             lower2, lower3, lower4, lower5, lower6, lower7));
         
+        // floor returns the greatest element that is <= e, or null if no such element
         Integer floor1 = (Integer) ((TreeSet) treeSet).floor(zero); // 0
         Integer floor2 = (Integer) ((TreeSet) treeSet).floor(minusOne); // null
         Integer floor3 = (Integer) ((TreeSet) treeSet).floor(one); // 1
         Integer floor4 = (Integer) ((TreeSet) treeSet).floor(two); // 2
         Integer floor5 = (Integer) ((TreeSet) treeSet).floor(ninetyNine); // 99
-        Integer floor6 = (Integer) ((TreeSet) treeSet).floor(oneHundred); // 100
-        Integer floor7 = (Integer) ((TreeSet) treeSet).floor(oneOone); // 100
-        System.out.println(String.format("%s, %s, %s, %s, %s, %s, %s.", 
+        Integer floor6 = (Integer) ((TreeSet) treeSet).floor(oneHundred); // 99
+        Integer floor7 = (Integer) ((TreeSet) treeSet).floor(oneOone); // 99
+        System.out.println(String.format("floor: %s, %s, %s, %s, %s, %s, %s.", 
             floor1, floor2, floor3, floor4, floor5, floor6, floor7));
 
-        Integer ceil1 = (Integer) ((TreeSet) treeSet).ceiling(zero); // 
-        Integer ceil2 = (Integer) ((TreeSet) treeSet).ceiling(minusOne);
-        Integer ceil3 = (Integer) ((TreeSet) treeSet).ceiling(one);
-        Integer ceil4 = (Integer) ((TreeSet) treeSet).ceiling(two);
-        Integer ceil5 = (Integer) ((TreeSet) treeSet).ceiling(ninetyNine);
-        Integer ceil6 = (Integer) ((TreeSet) treeSet).ceiling(oneHundred);
-        Integer ceil7 = (Integer) ((TreeSet) treeSet).ceiling(oneOone);
+        // ceiling returns the smallest element that is >= e, or null if no such element
+        Integer ceil1 = (Integer) ((TreeSet) treeSet).ceiling(zero); // 0
+        Integer ceil2 = (Integer) ((TreeSet) treeSet).ceiling(minusOne); // 0
+        Integer ceil3 = (Integer) ((TreeSet) treeSet).ceiling(one); // 1
+        Integer ceil4 = (Integer) ((TreeSet) treeSet).ceiling(two); // 2 
+        Integer ceil5 = (Integer) ((TreeSet) treeSet).ceiling(ninetyNine); // 99
+        Integer ceil6 = (Integer) ((TreeSet) treeSet).ceiling(oneHundred); // null
+        Integer ceil7 = (Integer) ((TreeSet) treeSet).ceiling(oneOone); // null
+        System.out.println(String.format("ceiling: %s, %s, %s, %s, %s, %s, %s.", 
+        ceil1, ceil2, ceil3, ceil4, ceil5, ceil6, ceil7));
+        
+        // higher returns the smallest element that is > e, or null if no such element
+        Integer high1 = (Integer) ((TreeSet) treeSet).higher(zero); // 1
+        Integer high2 = (Integer) ((TreeSet) treeSet).higher(minusOne); // 0
+        Integer high3 = (Integer) ((TreeSet) treeSet).higher(one); // 2
+        Integer high4 = (Integer) ((TreeSet) treeSet).higher(two); // 3 
+        Integer high5 = (Integer) ((TreeSet) treeSet).higher(ninetyNine); // null
+        Integer high6 = (Integer) ((TreeSet) treeSet).higher(oneHundred); // null
+        Integer high7 = (Integer) ((TreeSet) treeSet).higher(oneOone); // null
+        System.out.println(String.format("higher: %s, %s, %s, %s, %s, %s, %s.", 
+        high1, high2, high3, high4, high5, high6, high7));
+
     }
 
     void testArrays() {
