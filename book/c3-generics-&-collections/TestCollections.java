@@ -115,21 +115,23 @@ public class TestCollections {
         System.out.println(String.format("%s, %s, %s, %s, %s, %s.", 
             lower2, lower3, lower4, lower5, lower6, lower7));
         
-        Integer ceil1 = (Integer) ((TreeSet) treeSet).ceiling(zero);
+        Integer floor1 = (Integer) ((TreeSet) treeSet).floor(zero); // 0
+        Integer floor2 = (Integer) ((TreeSet) treeSet).floor(minusOne); // null
+        Integer floor3 = (Integer) ((TreeSet) treeSet).floor(one); // 1
+        Integer floor4 = (Integer) ((TreeSet) treeSet).floor(two); // 2
+        Integer floor5 = (Integer) ((TreeSet) treeSet).floor(ninetyNine); // 99
+        Integer floor6 = (Integer) ((TreeSet) treeSet).floor(oneHundred); // 100
+        Integer floor7 = (Integer) ((TreeSet) treeSet).floor(oneOone); // 100
+        System.out.println(String.format("%s, %s, %s, %s, %s, %s, %s.", 
+            floor1, floor2, floor3, floor4, floor5, floor6, floor7));
+
+        Integer ceil1 = (Integer) ((TreeSet) treeSet).ceiling(zero); // 
         Integer ceil2 = (Integer) ((TreeSet) treeSet).ceiling(minusOne);
         Integer ceil3 = (Integer) ((TreeSet) treeSet).ceiling(one);
         Integer ceil4 = (Integer) ((TreeSet) treeSet).ceiling(two);
         Integer ceil5 = (Integer) ((TreeSet) treeSet).ceiling(ninetyNine);
         Integer ceil6 = (Integer) ((TreeSet) treeSet).ceiling(oneHundred);
         Integer ceil7 = (Integer) ((TreeSet) treeSet).ceiling(oneOone);
-        
-        Integer floor1 = (Integer) ((TreeSet) treeSet).floor(zero);
-        Integer floor2 = (Integer) ((TreeSet) treeSet).floor(minusOne);
-        Integer floor3 = (Integer) ((TreeSet) treeSet).floor(one);
-        Integer floor4 = (Integer) ((TreeSet) treeSet).floor(two);
-        Integer floor5 = (Integer) ((TreeSet) treeSet).floor(ninetyNine);
-        Integer floor6 = (Integer) ((TreeSet) treeSet).floor(oneHundred);
-        Integer floor7 = (Integer) ((TreeSet) treeSet).floor(oneOone);
     }
 
     void testArrays() {
