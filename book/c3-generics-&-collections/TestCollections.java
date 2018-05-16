@@ -114,7 +114,8 @@ public class TestCollections {
         Integer lower6 = (Integer) ((TreeSet) treeSet).lower(oneHundred); // 99
         Integer lower7 = (Integer) ((TreeSet) treeSet).lower(oneOone); // 99 (not a hundred because '100' isn't an element of treeSet)
         System.out.println(String.format("lower: %s, %s, %s, %s, %s, %s.", 
-            lower2, lower3, lower4, lower5, lower6, lower7));
+            lower2, lower3, lower4, lower5, lower
+            6, lower7));
         
         // floor returns the greatest element that is <= e, or null if no such element
         Integer floor1 = (Integer) ((TreeSet) treeSet).floor(zero); // 0
@@ -148,7 +149,6 @@ public class TestCollections {
         Integer high7 = (Integer) ((TreeSet) treeSet).higher(oneOone); // null
         System.out.println(String.format("higher: %s, %s, %s, %s, %s, %s, %s.", 
         high1, high2, high3, high4, high5, high6, high7));
-
     }
 
     void testArrays() {
