@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +27,21 @@ public class TestCollections {
 
     void testCollections() {
         String lucas = "Lucas";
+        int lucasHash = lucas.hashCode(); // 73771404
+        int xavierHash = "Xavier".hashCode(); // -1682400983
+        int ferreiraHash = "Ferreira".hashCode(); //258348466 
+        int anakinHash = "Anakin".hashCode(); //1965478044
+        int skywalkerHash = "Skywalker".hashCode(); // 1320816759
+        int lukeHash = "Luke".hashCode(); // 2379971
+        int jediHash = "Jedi".hashCode();
+
+        String hashes = String.format(
+            "Lucas: %s, Xavier: %s, Ferreira: %s," +
+            "%nAnakin: %s, Skywalker: %s, Luke: %s, Jedi: %s.",
+            lucasHash, xavierHash, ferreiraHash, anakinHash, 
+            skywalkerHash, lukeHash, jediHash);
+        
+        System.out.println(hashes);
         int age = 24;
         long id = 123456;
 
@@ -70,6 +86,50 @@ public class TestCollections {
         System.out.println("Unique names size: " + uniqueNames.size()); // 5
         addToSet = uniqueNames.addAll(repeatedNames);
         System.out.println(addToSet + " " + uniqueNames);
+        // doesn't compile. collections.sort can only be called
+        // on a List implementation
+        // Collections.sort(uniqueNames);
+        Set<Integer> treeSet = new TreeSet<Integer>();
+        for ( int i = 0; i < 100; i++ ) {
+            treeSet.add(i);
+        }
+        Integer zero = new Integer(0);
+        Integer minusOne = new Integer(-1);
+        Integer one = new Integer(1);
+        Integer two = new Integer(2);
+        Integer ninetyNine = new Integer(99);
+        Integer oneHundred = new Integer(100);
+        Integer oneOone = new Integer(101);
+        
+        // this throws a nullpointer exception, because there's no
+        // element smaller than 0 in this set, and when navigableSet.lower()
+        // can't find an element, it returns null. 
+        // Since primitives cannot be assigned to null, it'll throw an exception:
+        // int lower1 = (int) ((TreeSet) treeSet).lower(zero);
+        Integer lower2 = (Integer) ((TreeSet) treeSet).lower(minusOne); // null
+        Integer lower3 = (Integer) ((TreeSet) treeSet).lower(one); // 0
+        Integer lower4 = (Integer) ((TreeSet) treeSet).lower(two); // 1
+        Integer lower5 = (Integer) ((TreeSet) treeSet).lower(ninetyNine); // 98
+        Integer lower6 = (Integer) ((TreeSet) treeSet).lower(oneHundred); // 99
+        Integer lower7 = (Integer) ((TreeSet) treeSet).lower(oneOone); // 99 (not a hundred because '100' isn't an element of treeSet)
+        System.out.println(String.format("%s, %s, %s, %s, %s, %s.", 
+            lower2, lower3, lower4, lower5, lower6, lower7));
+        
+        Integer ceil1 = (Integer) ((TreeSet) treeSet).ceiling(zero);
+        Integer ceil2 = (Integer) ((TreeSet) treeSet).ceiling(minusOne);
+        Integer ceil3 = (Integer) ((TreeSet) treeSet).ceiling(one);
+        Integer ceil4 = (Integer) ((TreeSet) treeSet).ceiling(two);
+        Integer ceil5 = (Integer) ((TreeSet) treeSet).ceiling(ninetyNine);
+        Integer ceil6 = (Integer) ((TreeSet) treeSet).ceiling(oneHundred);
+        Integer ceil7 = (Integer) ((TreeSet) treeSet).ceiling(oneOone);
+        
+        Integer floor1 = (Integer) ((TreeSet) treeSet).floor(zero);
+        Integer floor2 = (Integer) ((TreeSet) treeSet).floor(minusOne);
+        Integer floor3 = (Integer) ((TreeSet) treeSet).floor(one);
+        Integer floor4 = (Integer) ((TreeSet) treeSet).floor(two);
+        Integer floor5 = (Integer) ((TreeSet) treeSet).floor(ninetyNine);
+        Integer floor6 = (Integer) ((TreeSet) treeSet).floor(oneHundred);
+        Integer floor7 = (Integer) ((TreeSet) treeSet).floor(oneOone);
     }
 
     void testArrays() {
@@ -100,7 +160,7 @@ public class TestCollections {
         // if ran independently, both should remove "Lucas"
         // but both will throw an "UnsupportedOperationException"
         // because Arrays.asList() returns a fixed-size list.
-        // nameList.remove(1); // index overload
+        // nameList.remove(one); // index overload
         // nameList.remove("Lucas"); // object overload
         // but both will throw an "UnsupportedOperationException"
         // nameList.add(0, "Skywalker");
