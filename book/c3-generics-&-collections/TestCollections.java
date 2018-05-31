@@ -3,16 +3,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.TreeSet;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * About Collections:
  * List: an ordered collection of elements that allows duplicate entries.
  * Set: a collection that does not allow duplicate entries.
  * Queue: a collection that orders its elements in a specific order for processing. Typically FIFO.
- * Map: a collection that maps keys to values, with no duplicate keys allowed. The elements in a map are key/value pairs.
+ * Map: Map is special, because it's a collection that doesn't extend Collection.
+ * It maps keys to values, with no duplicate keys allowed. The elements in a map are key/value pairs.
  * 
  * @author Lucas Xavier Ferreira
  * 
@@ -24,12 +29,27 @@ public class TestCollections {
         // test.testArrays();
         // test.testLists();
         // test.testCollections();
-        test.testQueues();
+        // test.testQueues();
+        test.testMaps();
     }
 
+    // map
+    void testMaps() {
+        // stores the keys in a hash table (uses hashCode() to retrieve them)
+        Map<String, Long> hashMap = new HashMap<>();
+        
+        // stores the keys in a sorted tree (adding and checking keys takes O(log n) time)
+        Map<String, Integer> treeMap = new TreeMap<>();
+
+        hashMap.isEmpty(); // true
+        
+        hashMap.put("Lucas", 24L);
+        System.out.println(hashMap);
+    }
     void testQueues() {
         // Array Deque is an List and 
         ArrayDeque<String> deck = new ArrayDeque<>();
+        LinkedList<Integer> linkedList = new LinkedList<>();
         try {
             // will throw an exception (NoSuchElementException) because the queue is empty
             // returns next element (if not empty), otherwise, throws exception
@@ -54,12 +74,12 @@ public class TestCollections {
 
         removedItem = deck.removeLast(); // F / [B, C, D, E]
         System.out.println(removedItem + " - " + deck);
-        // void, inserts at front
+        // void - inserts at front
         deck.push("A"); // [A, B, C, D, E]
         deck.push("Z"); // [Z, A, B, C, D, E]
         System.out.println(deck);
         
-        // removes and returns next element or returns null if empty queue
+        // E - removes and returns next element or returns null if empty queue
         System.out.println(deck.poll()); // Z - [A, B, C, D, E]
         
         System.out.println(deck); // [A, B, C, D, E]
