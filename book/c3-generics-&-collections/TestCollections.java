@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +34,7 @@ public class TestCollections {
         test.testMaps();
     }
 
-    // map
+    // map <K, V> (key, value)
     void testMaps() {
         // stores the keys in a hash table (uses hashCode() to retrieve them)
         Map<String, Long> hashMap = new HashMap<>();
@@ -41,10 +42,55 @@ public class TestCollections {
         // stores the keys in a sorted tree (adding and checking keys takes O(log n) time)
         Map<String, Integer> treeMap = new TreeMap<>();
 
-        hashMap.isEmpty(); // true
+        // V - adds or replaces key/value pair. return previous value or null
+        Long value = hashMap.put("Lucas", 11982546774L); // {Lucas, 11982546774}
+        System.out.println(hashMap + " " + value); // prints: "{Lucas, 11982546774} null"
         
-        hashMap.put("Lucas", 24L);
-        System.out.println(hashMap);
+        value = hashMap.put("Lucas", 123L);
+        System.out.println(hashMap + " " + value); // prints: "{Lucas, 123} 11982546774"
+
+        value = hashMap.get("Lucas");
+        System.out.println(value); // 123
+
+        try {
+            // returns null since there's no "abc" key
+            // and then throws NPE (NullPointerException)
+            // since primitives can't be null:
+            long x = hashMap.get("abc");   
+            System.out.println(x);
+        } catch (Exception e) {
+            e.printStackTrace(); // NPE
+        }
+        hashMap.clear(); // {}
+        System.out.println(hashMap); // prints: "{}"
+        String alpha = "";
+        for ( int i = 1; i <= 26; i++) {
+            String s = "" + (char) (i + 64);
+            alpha += s;
+            hashMap.put(s, i+0L);
+        }
+        System.out.println(alpha); // the alphabet
+        System.out.println(hashMap); // prints: "{A=1, B=2, C=3, D=4, ..., Z=26}"
+
+        boolean containsKey = hashMap.containsKey("a"); // false
+        int n = 1;
+        boolean containsValue = hashMap.containsValue(n); // should print false because it stores Long values, not ints
+        System.out.println(containsKey + " | " + containsValue); // prints: "false | false"
+        // returns a Set of K type:
+        Set<String> mapKeys = hashMap.keySet();
+        // returns a Collection of V type:
+        Collection mapValues = hashMap.values();
+        
+        // doesn't compile because the map keys are of type String, not Boolean
+        // Set<Boolean> crazyKeys = hashMap.keySet();
+        
+        // doesn't compile because the map values are of type Long, not String
+        // Collection<String> crazyValues = hashMap.values();
+
+        String alphabet = mapKeys.toString();
+        System.out.println(alphabet); // prints: "[A, B, C, D, E, ..., Z]"
+        System.out.println(mapValues); // prints: "[1, 2, 3, 4, 5, ..., 26]"
+
     }
     void testQueues() {
         // Array Deque is an List and 
