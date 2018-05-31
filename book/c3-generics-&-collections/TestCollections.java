@@ -1,3 +1,4 @@
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
@@ -23,8 +24,14 @@ public class TestCollections {
         // test.testArrays();
         // test.testLists();
         test.testCollections();
+        test.testQueues();
     }
 
+    void testQueues() {
+        ArrayDeque<String> deck = new ArrayDeque<>();
+        
+    }
+    
     void testCollections() {
         String lucas = "Lucas";
         int lucasHash = lucas.hashCode(); // 73771404
@@ -106,6 +113,7 @@ public class TestCollections {
         // can't find an element, it returns null. 
         // Since primitives cannot be assigned to null, it'll throw an exception:
         // int lower1 = (int) ((TreeSet) treeSet).lower(zero);
+        
         // lower returns the greatest element that is < e, or null if no such element
         Integer lower2 = (Integer) ((TreeSet) treeSet).lower(minusOne); // null
         Integer lower3 = (Integer) ((TreeSet) treeSet).lower(one); // 0
@@ -114,8 +122,7 @@ public class TestCollections {
         Integer lower6 = (Integer) ((TreeSet) treeSet).lower(oneHundred); // 99
         Integer lower7 = (Integer) ((TreeSet) treeSet).lower(oneOone); // 99 (not a hundred because '100' isn't an element of treeSet)
         System.out.println(String.format("lower: %s, %s, %s, %s, %s, %s.", 
-            lower2, lower3, lower4, lower5, lower
-            6, lower7));
+            lower2, lower3, lower4, lower5, lower6, lower7));
         
         // floor returns the greatest element that is <= e, or null if no such element
         Integer floor1 = (Integer) ((TreeSet) treeSet).floor(zero); // 0
