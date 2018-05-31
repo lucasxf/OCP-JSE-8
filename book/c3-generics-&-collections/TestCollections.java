@@ -23,13 +23,64 @@ public class TestCollections {
         TestCollections test = new TestCollections();
         // test.testArrays();
         // test.testLists();
-        test.testCollections();
+        // test.testCollections();
         test.testQueues();
     }
 
     void testQueues() {
+        // Array Deque is an List and 
         ArrayDeque<String> deck = new ArrayDeque<>();
+        try {
+            // will throw an exception (NoSuchElementException) because the queue is empty
+            // returns next element (if not empty), otherwise, throws exception
+            String s = deck.element();
+            System.out.println("element: " + s);
+        } catch (Exception e) {
+            System.out.println("trying to get an element from an empty array deque:\n");
+            e.printStackTrace();
+        }
+        // boolean, inserts at end
+        boolean insertAtBack = deck.add("A"); // true / [A]
+        System.out.println(insertAtBack + ": " + deck);
+        deck.add("B"); // [A, B]
+        String c = deck.offer("C")+ "x"; // true / [A, B, C]
+        System.out.println(insertAtBack + ": " + deck + c); // prints: true: [A, B, C]truex
+        // E - removes next element or throws an exception if emtpy queue
+        String removedItem = deck.remove(); // A / [B, C]
+        System.out.println(deck + " " + removedItem);
+        deck.add("D");
+        deck.add("E");
+        deck.add("F"); // [B, C, D, E, F]
+
+        removedItem = deck.removeLast(); // F / [B, C, D, E]
+        System.out.println(removedItem + " - " + deck);
+        // void, inserts at front
+        deck.push("A"); // [A, B, C, D, E]
+        deck.push("Z"); // [Z, A, B, C, D, E]
+        System.out.println(deck);
         
+        // removes and returns next element or returns null if empty queue
+        System.out.println(deck.poll()); // Z - [A, B, C, D, E]
+        
+        System.out.println(deck); // [A, B, C, D, E]
+        
+        // returns next element or null if empty queue
+        System.out.println(deck.peek()); // A - [A, B, C, D, E]
+
+        // removes and returns next element or throws and exception if emtpy queue
+        System.out.println(deck.pop()); // A - [B, C, D, E]
+        System.out.println(deck.pop()); // B - [C, D, E]
+        System.out.println(deck); // [C, D, E]
+        deck.remove(); // [D, E]
+        deck.remove(); //[E]
+        System.out.println(deck);
+        deck.remove(); // []
+        System.out.println(deck);
+        try {
+            deck.remove(); // throws an exception (NoSuchElementException)
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     void testCollections() {
