@@ -111,12 +111,41 @@ public class TestCollections {
         testMerge = -1L;
         hashMap.put("a", 123L);
         testMerge = hashMap.merge("a", 12L, isEven); // returns 12
-        System.out.println(testMerge); 
-        isEven.andThen(null);
+        System.out.println(testMerge);
+        // throws NPE
+        // isEven.andThen(null);
         System.out.println(isEven.apply(10l, 15l)); // 10
         System.out.println(isEven.apply(25l, 15l)); // 1000
         System.out.println(isEven.apply(40l, 20l)); // 40
         System.out.println(isEven.apply(15l, 250l)); // 250
+
+        Map<String, String> names = new HashMap<>();
+        names.put("Lucas", "Xavier");
+        names.put("Marcia", null);
+        System.out.println(names); // "{Lucas=Xavier, Marcia=null}"
+        // insted of throwing nullPointer exception at null.contains, this will return the value "Inez"
+        String surname = names.merge("Marcia", "Inez", (v1, v2) -> v1.contains("z") ? v1 : v2);
+        System.out.println(surname); // "Inez"
+        System.out.println(names); // "{Lucas=Xavier, Marcia=Inez}"
+        names.putIfAbsent("Thomas", "Gabriel"); // "{Lucas=Xavier, Marcia=Inez, Thomas=Gabriel}"
+        System.out.println(names);
+
+         // returns Ferrreira because its length is bigger than Xavier
+        names.merge("Lucas", "Ferreira", (v1, v2) -> v1.length() > v2.length() ? v1 : v2);
+        System.out.println(names); // "{Lucas=Ferreira, Marcia=Inez, Thomas=Gabriel}"
+
+        // this will remove the key "Lucas" from the map.
+        // it happens because the biFunction states that if the value in key "Lucas"
+        // isn't null, it should return null, otherwise it would return "999"
+        names.merge("Lucas", "999", (v1, v2) -> v1 != null ? null : v2);
+        System.out.println(names);
+
+        // this will add a key "Lucas" of value "999" because the test within
+        // the bifunction will assess to false, so the value "999" will be returned
+        // and a new key will be added to the map
+        names.merge("Lucas", "999", (v1, v2) -> v1 != null ? null : v2);
+        names.merge("Felipe", "XF", (v1, v2) -> v1 != null ? null : v2);
+        System.out.println(names); // {Felipe=XF, Lucas=999, Marcia=Inez, Thomas=Gabriel}
     }
 
     void testQueues() {
