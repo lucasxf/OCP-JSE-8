@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.TreeSet;
+import java.util.function.BiFunction;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -90,8 +91,34 @@ public class TestCollections {
         String alphabet = mapKeys.toString();
         System.out.println(alphabet); // prints: "[A, B, C, D, E, ..., Z]"
         System.out.println(mapValues); // prints: "[1, 2, 3, 4, 5, ..., 26]"
+        
+        // returns the previous value associated with the key if the presented value is absent, or null if not
+        Long isAbsent = hashMap.putIfAbsent("a", 1L);
+        System.out.println("same value, different key: " + isAbsent); // null
+        isAbsent = hashMap.putIfAbsent("A", 1L);
+        System.out.println("same key, same value: " + isAbsent); // 1
+        isAbsent = hashMap.putIfAbsent("A", 99L);
+        System.out.println("same key, different value: " + isAbsent); // 1
+        isAbsent = hashMap.putIfAbsent("a", 123L);
+        System.out.println("same key, different value: " + isAbsent); // 1
+        System.out.println(hashMap);
 
+        // if v1 is even, return v1. if v2 is even, return v2. if none of them are even, return 1K
+        BiFunction<Long, Long, Long> isEven = (v1, v2) -> v1 %2 == 0 ? v1 : v2 %2 == 0 ? v2 : 1000L;
+        Long testMerge = hashMap.merge("a", 999L, isEven); // returns 1000
+        System.out.println(hashMap);
+        System.out.println(testMerge);
+        testMerge = -1L;
+        hashMap.put("a", 123L);
+        testMerge = hashMap.merge("a", 12L, isEven); // returns 12
+        System.out.println(testMerge); 
+        isEven.andThen(null);
+        System.out.println(isEven.apply(10l, 15l)); // 10
+        System.out.println(isEven.apply(25l, 15l)); // 1000
+        System.out.println(isEven.apply(40l, 20l)); // 40
+        System.out.println(isEven.apply(15l, 250l)); // 250
     }
+
     void testQueues() {
         // Array Deque is an List and 
         ArrayDeque<String> deck = new ArrayDeque<>();
@@ -358,4 +385,5 @@ public class TestCollections {
         System.out.println(hasRemoved);
         System.out.println(integers);
     }
+    
 }
