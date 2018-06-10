@@ -159,6 +159,8 @@ public class TestCollections {
         absentValue = names.computeIfAbsent("Luke", absentFunction); // returns "Anakin"
         System.out.println(absentValue); // Anakin
         System.out.println(names); // {Felipe=XF, Lucas=999, Marcia=Inez, Luke=Anakin, Thomas=Gabriel}
+        names.compute("Anakin", presentBiFunction);
+        System.out.println(names);
     }
 
     void testQueues() {
