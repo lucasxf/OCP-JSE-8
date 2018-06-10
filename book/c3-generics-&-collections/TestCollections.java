@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.TreeSet;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -146,6 +147,18 @@ public class TestCollections {
         names.merge("Lucas", "999", (v1, v2) -> v1 != null ? null : v2);
         names.merge("Felipe", "XF", (v1, v2) -> v1 != null ? null : v2);
         System.out.println(names); // {Felipe=XF, Lucas=999, Marcia=Inez, Thomas=Gabriel}
+        
+        BiFunction<String, String, String> presentBiFunction = (s1, s2) -> s1 != null ? "Skywalker" : s1;
+        // since there's no "Luke" key yet, this will return null
+        String absentValue = names.computeIfPresent("Luke", presentBiFunction); // {Felipe=XF, Lucas=999, Marcia=Inez, Thomas=Gabriel}
+        System.out.println(absentValue); // null, because there's no "Luke" key to be computed
+        System.out.println(names); // {Felipe=XF, Lucas=999, Marcia=Inez, Thomas=Gabriel}
+
+        // this will add the value "Anakin" to the absent (that will be added) key "Luke"
+        Function<String, String> absentFunction = key -> "Anakin";
+        absentValue = names.computeIfAbsent("Luke", absentFunction); // returns "Anakin"
+        System.out.println(absentValue); // Anakin
+        System.out.println(names); // {Felipe=XF, Lucas=999, Marcia=Inez, Luke=Anakin, Thomas=Gabriel}
     }
 
     void testQueues() {
