@@ -1,5 +1,5 @@
-import java.nio.Path;
-import java.nio.Paths;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author Lucas
@@ -12,8 +12,11 @@ public class Chapter9NIO2 {
     }
 
     void testPaths() {
-        Path path = java.nio.file.Paths.get("c:", "test.txt");
-        System.out.println(path);
+        Path path = Paths.get("c:", "test.txt");
+        System.out.println(path); // prints "c:\test.txt"
+
+        Path path2 = Paths.get("c:", "dummy"); // prints "c:\dummy" even though dummy doesn't exist.
+        System.out.println(path2); 
     }
 
 }
