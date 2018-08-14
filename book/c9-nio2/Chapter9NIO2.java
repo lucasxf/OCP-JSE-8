@@ -1,23 +1,28 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 
 /**
  * @author Lucas
  */
 public class Chapter9NIO2 {
 
-    public static void main(String[] args) throws URISyntaxException {
+    public static void main(String[] args) throws URISyntaxException, IOException {
         Chapter9NIO2 test = new Chapter9NIO2();
         test.testPaths();
     }
 
-    void testPaths() throws URISyntaxException {
+    void testPaths() throws URISyntaxException, IOException {
         Path path = Paths.get("c:", "test.txt");
         System.out.println(path); // prints "c:\test.txt"
         URI uri = path.toUri();
@@ -106,6 +111,18 @@ public class Chapter9NIO2 {
         System.out.println(path18);
         // throws "Exception in thread "main" java.lang.IllegalArgumentException"
         // System.out.println(path15.subpath(1, 1));
+
+        // Files.delete(Paths.get("c:", "xpto")); // throws NoSuchFileException (subtype of IOException)
+        boolean exists = Files.deleteIfExists(Paths.get("c:", "xpto"));
+        System.out.println(exists); // prints "false"
+
+        Path filePath = Paths.get("c:", "test.txt");
+        try ( BufferedReader reader = Files.newBufferedReader(filePath, Charset.defaultCharset())) {
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
     }
 
     interface MyInterface {
