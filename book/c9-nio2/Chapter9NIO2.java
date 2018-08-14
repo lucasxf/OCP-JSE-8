@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -10,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -119,10 +121,35 @@ public class Chapter9NIO2 {
         Path filePath = Paths.get("c:", "test.txt");
         try ( BufferedReader reader = Files.newBufferedReader(filePath, Charset.defaultCharset())) {
             String line = "";
+            // while there is a next line on the file keeps reading
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
         }
+
+        // because writing to c:/ requires admin access in Windows, the following
+        // throws "Exception in thread "main" java.nio.file.AccessDeniedException: c:\some_new_file.txt"
+        // Path newFile = Paths.get("c:", "some_new_file.txt");
+
+        // fix: writing to desktop
+        Path newFile = Paths.get("c:", "users", "lucas", "desktop", "newFile.txt");
+        try ( BufferedWriter writer = Files.newBufferedWriter(newFile, Charset.forName("UTF-16"))) {
+            writer.write("OCP is near...");
+        }
+        System.out.println(Charset.defaultCharset()); // printed "windows 1252"
+        // reading from file
+        try ( BufferedReader reader = Files.newBufferedReader(newFile, Charset.defaultCharset())) {
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+        System.out.println("--------------------");
+        List<String> lines = Files.readAllLines(filePath);
+        for (String line : lines) {
+            System.out.println(line); // prints lines in file "filePath"
+        }
+
     }
 
     interface MyInterface {
