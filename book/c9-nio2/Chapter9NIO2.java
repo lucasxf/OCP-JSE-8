@@ -118,7 +118,11 @@ public class Chapter9NIO2 {
         boolean exists = Files.deleteIfExists(Paths.get("c:", "xpto"));
         System.out.println(exists); // prints "false"
 
+        System.out.println("");
         Path filePath = Paths.get("c:", "test.txt");
+        System.out.println(filePath);
+        System.out.println("SIZE: " + Files.size(filePath));
+        System.out.println("");
         try ( BufferedReader reader = Files.newBufferedReader(filePath, Charset.defaultCharset())) {
             String line = "";
             // while there is a next line on the file keeps reading
@@ -133,6 +137,7 @@ public class Chapter9NIO2 {
 
         // fix: writing to desktop
         Path newFile = Paths.get("c:", "users", "lucas", "desktop", "newFile.txt");
+        System.out.println(newFile);
         try ( BufferedWriter writer = Files.newBufferedWriter(newFile, Charset.forName("UTF-16"))) {
             writer.write("OCP is near...");
         }
@@ -145,11 +150,31 @@ public class Chapter9NIO2 {
             }
         }
         System.out.println("--------------------");
-        List<String> lines = Files.readAllLines(filePath);
+        List<String> lines = Files.readAllLines(filePath); // may throw "OutOfMemoryErro" if the file is too big
         for (String line : lines) {
             System.out.println(line); // prints lines in file "filePath"
         }
-
+        System.out.println(Files.isDirectory(filePath)); // prints "false"
+        System.out.println(Files.isRegularFile(filePath)); // prints "true"
+        System.out.println(Files.isSymbolicLink(filePath)); // prints "false"
+        
+        System.out.println("");
+        Path m2File = Paths.get("c:", "users", "lucas", ".m2");
+        System.out.println(m2File);
+        System.out.println(Files.isDirectory(m2File)); // prints "true"
+        System.out.println(Files.isRegularFile(m2File)); // prints "false"
+        System.out.println(Files.isSymbolicLink(m2File)); // prints "false"
+        
+        System.out.println("");
+        Path appDataFile = Paths.get("c:", "users", "lucas", "appdata");
+        System.out.println(appDataFile);
+        System.out.println(Files.isDirectory(appDataFile)); // prints "true"
+        System.out.println(Files.isExecutable(appDataFile)); // prints "true"
+        System.out.println(Files.isHidden(appDataFile)); // prints "false"
+        System.out.println(Files.isReadable(appDataFile)); // prints "true"
+        System.out.println(Files.isRegularFile(appDataFile)); // prints "true" ??
+        System.out.println(Files.isSymbolicLink(appDataFile)); // prints "false" ??
+        System.out.println(Files.isWritable(appDataFile)); // prints "false"
     }
 
     interface MyInterface {
